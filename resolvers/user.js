@@ -29,6 +29,12 @@ const resolvers = {
       const users = await User.findAll();
       return users;
     },
+
+    findUserByUsername: async (_, args) => {
+      const findUser = await User.findByUsername(args.username);
+      console.log(findUser);
+      return findUser;
+    },
   },
 
 
