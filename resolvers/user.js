@@ -1,4 +1,7 @@
 const User = require("../models/user");
+const bcryptjs = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const { GraphQLError } = require("graphql");
 
 const Users = [
   {
@@ -19,8 +22,7 @@ const Users = [
   },
 ];
 
-// Resolvers define how to fetch the types defined in your schema.
-// This resolver retrieves books from the "books" array above.
+
 const resolvers = {
   Query: {
     findAllUsers: async () => {
@@ -28,6 +30,49 @@ const resolvers = {
       return users;
     },
   },
+
+
+  Mutation: {
+    register: async (_, args ) => {
+      const newUser = args.newUser;
+      const result = await User.createUser(newUser);
+      return result;
+    },
+
+    login: async (_, args) => {
+      const { email, password } = args;
+      const user = await User.findByEmail(email);
+      if (!user) {
+        throw new GraphQLError("Invalid email/password", {
+          extensions: {
+            code: "UNAUTHORIZED",
+          },
+        });
+      }
+      const isPasswordValid = bcryptjs.compareSync(password, user.password);
+      if (!isPasswordValid) {
+        throw new GraphQLError("Invalid email/password", {
+          extensions: {
+            code: "UNAUTHORIZED",
+          },
+        });
+      }
+
+      const access_token = jwt.sign(
+        {
+          _id: user._id,
+          email: user.email,
+          username: user.username,
+        },
+        process.env.JWT_SECRET
+      );
+
+      return {
+        access_token,
+        email,
+      };
+    },
+  }
 };
 
 module.exports = resolvers;

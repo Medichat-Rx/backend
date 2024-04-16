@@ -1,6 +1,4 @@
-// A schema is a collection of type definitions (hence "typeDefs")
-// that together define the "shape" of queries that are executed against
-// your data.
+
 const typeDefs = `#graphql
   type User {
       _id: ID
@@ -11,11 +9,26 @@ const typeDefs = `#graphql
       createdAt: String
   }
 
-  # The "Query" type is special: it lists all of the available queries that
-  # clients can execute, along with the return type for each. In this
-  # case, the "books" query returns an array of zero or more Books (defined above).
+  type LoginUser {
+    access_token: String
+    email: String
+  }
+
+  input NewUser {
+    name: String
+    username: String!
+    email: String!
+    password: String!
+  }
+
+
   type Query {
     findAllUsers: [User]
+  }
+
+  type Mutation{
+    register(newUser: NewUser): User
+    login(email: String!, password: String!): LoginUser
   }
 `;
 
