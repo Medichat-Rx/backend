@@ -21,6 +21,15 @@ class User {
     return data;
   }
 
+  static async findByUsername(username) {
+    const userCollection = this.collection();
+    const data = await userCollection.find({ 
+      username: {$regex: new RegExp(username, "i")}
+    }).toArray();
+    console.log(data);
+    return data;
+  }
+
   static async createUser(newUser) {
     const userCollection = this.collection();
     const isEmailValid = validator.isEmail(newUser.email);
