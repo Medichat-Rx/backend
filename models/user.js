@@ -95,13 +95,13 @@ class User {
       });
     }
 
-    if (isUsernameUniqueValid) {
-      throw new GraphQLError("Username must be unique", {
-        extensions: {
-          code: "BAD_USER_INPUT",
-        },
-      });
-    }
+    // if (isUsernameUniqueValid) {
+    //   throw new GraphQLError("Username must be unique", {
+    //     extensions: {
+    //       code: "BAD_USER_INPUT",
+    //     },
+    //   });
+    // }
 
     const data = await userCollection.insertOne({
       ...newUser,
