@@ -35,6 +35,12 @@ const resolvers = {
       console.log(findUser);
       return findUser;
     },
+
+    findUserById: async (_, args) => {
+      const { _id } = args;
+      const user = await User.findById(_id);
+      return user;
+    },
   },
 
 

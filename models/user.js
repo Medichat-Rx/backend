@@ -2,7 +2,7 @@ const database = require("../config/db");
 const validator = require("validator");
 const { GraphQLError } = require("graphql");
 const bcryptjs = require("bcryptjs");
-
+const { ObjectId } = require("mongodb");
 class User {
   static collection() {
     return database.collection("users");
@@ -18,6 +18,12 @@ class User {
   static async findByEmail(email) {
     const userCollection = this.collection();
     const data = await userCollection.findOne({ email: email });
+    return data;
+  }
+
+  static async findById(_id) {
+    const userCollection = this.collection();
+    const data = await userCollection.findOne({ _id: new ObjectId(_id) });
     return data;
   }
 
