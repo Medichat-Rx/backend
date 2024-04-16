@@ -14,13 +14,20 @@ const typeDefs = `#graphql
     email: String
   }
 
-  
+  input NewUser {
+    name: String
+    username: String!
+    email: String!
+    password: String!
+  }
+
 
   type Query {
     findAllUsers: [User]
   }
 
   type Mutation{
+    register(newUser: NewUser): User
     login(email: String!, password: String!): LoginUser
   }
 `;

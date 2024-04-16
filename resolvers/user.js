@@ -33,6 +33,12 @@ const resolvers = {
 
 
   Mutation: {
+    register: async (_, args ) => {
+      const newUser = args.newUser;
+      const result = await User.createUser(newUser);
+      return result;
+    },
+
     login: async (_, args) => {
       const { email, password } = args;
       const user = await User.findByEmail(email);
