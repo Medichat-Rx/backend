@@ -1,3 +1,5 @@
+const User = require("../models/user");
+
 const Users = [
   {
     _id: 1,
@@ -21,8 +23,9 @@ const Users = [
 // This resolver retrieves books from the "books" array above.
 const resolvers = {
   Query: {
-    findAllUsers: () => {
-      return Users;
+    findAllUsers: async () => {
+      const users = await User.findAll();
+      return users;
     },
   },
 };
