@@ -2,6 +2,7 @@ const User = require("../models/user");
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { GraphQLError } = require("graphql");
+const Conversation = require("../models/conversation");
 
 const Users = [
   {
@@ -22,7 +23,6 @@ const Users = [
   },
 ];
 
-
 const resolvers = {
   Query: {
     findAllUsers: async () => {
@@ -32,7 +32,6 @@ const resolvers = {
 
     findUserByUsername: async (_, args) => {
       const findUser = await User.findByUsername(args.username);
-      console.log(findUser);
       return findUser;
     },
 
@@ -43,12 +42,15 @@ const resolvers = {
     },
   },
 
-
   Mutation: {
-    register: async (_, args ) => {
+    register: async (_, args) => {
       const newUser = args.newUser;
       // console.log(newUser.username, "<<<<<")
       const result = await User.createUser(newUser);
+
+      /// create conversation upon register
+      const createConversation = await Conversation.createConversation(result._id)
+      // console.log(createConversation, "<<<<");
       return result;
     },
 
@@ -85,7 +87,7 @@ const resolvers = {
         email,
       };
     },
-  }
+  },
 };
 
 module.exports = resolvers;

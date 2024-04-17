@@ -16,6 +16,7 @@
     "bcryptjs": "^2.4.3",
     "dotenv": "^16.4.5",
     "graphql": "^16.8.1",
+    "hercai": "^12.2.0",
     "ioredis": "^5.3.2",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.5.0",
