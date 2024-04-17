@@ -6,11 +6,11 @@ class Conversation {
     return database.collection("conversations");
   }
 
-  static async getChatUser() {
+  static async getChatUser(_id) {
     const conversationCollection = this.collection();
 
     const data = await conversationCollection.findOne({
-      UserId: new ObjectId("661e32db89ab5d7409672d22"),
+      UserId: new ObjectId(_id),
     });
 
     return data;

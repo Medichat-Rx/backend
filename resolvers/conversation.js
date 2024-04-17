@@ -2,15 +2,17 @@ const Conversation = require("../models/conversation");
 
 const resolvers = {
   Query: {
-    getChatMessage: async () => {
-      const chats = await Conversation.getChatUser();
+    getChatMessage: async (_, args, contextValue) => {
+      const decodedToken = await contextValue.authentication();
 
-      console.log(chats, "<<<<")
+      console.log(decodedToken._id);
+      const chats = await Conversation.getChatUser(decodedToken._id);
+
+      console.log(chats, "<<<<");
 
       return chats;
     },
   },
 };
 
-
-module.exports = resolvers
+module.exports = resolvers;
