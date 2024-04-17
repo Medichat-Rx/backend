@@ -8,6 +8,7 @@ type Conversation {
 type Message {
     _id: ID 
     UserId: ID
+    username: String
     text: String
     createdAt: String
 }

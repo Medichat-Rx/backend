@@ -22,6 +22,7 @@ const resolvers = {
 
       const data = {
         text,
+        username: decodedToken.username,
         UserId,
       };
 
