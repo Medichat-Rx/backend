@@ -8,9 +8,26 @@ const resolvers = {
       console.log(decodedToken._id);
       const chats = await Conversation.getChatUser(decodedToken._id);
 
-      console.log(chats, "<<<<");
+      // console.log(chats, "<<<<");
 
       return chats;
+    },
+  },
+
+  Mutation: {
+    sendMessage: async (_, args, contextValue) => {
+      const decodedToken = await contextValue.authentication();
+      const UserId = decodedToken._id;
+      const { text } = args.newMessage;
+
+      const data = {
+        text,
+        UserId,
+      };
+
+      const result = await Conversation.sendMessage(data);
+
+      return result;
     },
   },
 };

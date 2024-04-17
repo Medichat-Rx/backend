@@ -25,8 +25,29 @@ class Conversation {
     return createConversation;
   }
 
-  static async sendMessage() {
+  static async sendMessage(data) {
     const conversationCollection = this.collection();
+
+    const result = await conversationCollection.updateOne(
+      {
+        UserId: new ObjectId(data.UserId),
+      },
+      {
+        $push: {
+          message: {
+            UserId: new ObjectId(data.UserId),
+            text: data.text,
+            createdAt: new Date(),
+          },
+        },
+      }
+    );
+
+    const updatedConversationWithNewMessage = await this.getChatUser(
+      data.UserId
+    );
+
+    return updatedConversationWithNewMessage;
   }
 }
 
