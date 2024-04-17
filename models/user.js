@@ -29,10 +29,9 @@ class User {
 
   static async findByUsername(username) {
     const userCollection = this.collection();
-    const data = await userCollection.find({ 
-      username: {$regex: new RegExp(username, "i")}
-    }).toArray();
-    console.log(data);
+    const data = await userCollection.findOne({
+      username: username,
+    });
     return data;
   }
 
@@ -40,12 +39,8 @@ class User {
     const userCollection = this.collection();
     const isEmailValid = validator.isEmail(newUser.email);
     const isLengthValid = validator.isLength(newUser.password, { min: 5 });
-    const isEmailUniqueValid = await this.findByEmail({
-      email: newUser.email,
-    });
-    const isUsernameUniqueValid = await this.findByUsername({
-      username: newUser.username,
-    });
+    const isEmailUniqueValid = await this.findByEmail(newUser.email);
+    const isUsernameUniqueValid = await this.findByUsername(newUser.username);
 
     if (validator.isEmpty(newUser.username)) {
       throw new GraphQLError("Username is required", {
@@ -95,20 +90,21 @@ class User {
       });
     }
 
-    // if (isUsernameUniqueValid) {
-    //   throw new GraphQLError("Username must be unique", {
-    //     extensions: {
-    //       code: "BAD_USER_INPUT",
-    //     },
-    //   });
-    // }
+    if (isUsernameUniqueValid) {
+      throw new GraphQLError("Username must be unique", {
+        extensions: {
+          code: "BAD_USER_INPUT",
+        },
+      });
+    }
 
     const data = await userCollection.insertOne({
       ...newUser,
+      createdAt: new Date(),
       password: bcryptjs.hashSync(newUser.password),
     });
 
-    console.log(data);
+    // console.log(data);
     const createUser = this.findById(data.insertedId);
 
     return createUser;

@@ -47,6 +47,7 @@ const resolvers = {
   Mutation: {
     register: async (_, args ) => {
       const newUser = args.newUser;
+      // console.log(newUser.username, "<<<<<")
       const result = await User.createUser(newUser);
       return result;
     },
