@@ -2,7 +2,7 @@ const database = require("../config/db");
 const validator = require("validator");
 const { GraphQLError } = require("graphql");
 const bcryptjs = require("bcryptjs");
-
+const { ObjectId } = require("mongodb");
 class User {
   static collection() {
     return database.collection("users");
@@ -21,12 +21,17 @@ class User {
     return data;
   }
 
+  static async findById(_id) {
+    const userCollection = this.collection();
+    const data = await userCollection.findOne({ _id: new ObjectId(_id) });
+    return data;
+  }
+
   static async findByUsername(username) {
     const userCollection = this.collection();
-    const data = await userCollection.find({ 
-      username: {$regex: new RegExp(username, "i")}
-    }).toArray();
-    console.log(data);
+    const data = await userCollection.findOne({
+      username: username,
+    });
     return data;
   }
 
@@ -34,12 +39,8 @@ class User {
     const userCollection = this.collection();
     const isEmailValid = validator.isEmail(newUser.email);
     const isLengthValid = validator.isLength(newUser.password, { min: 5 });
-    const isEmailUniqueValid = await this.findByEmail({
-      email: newUser.email,
-    });
-    const isUsernameUniqueValid = await this.findByUsername({
-      username: newUser.username,
-    });
+    const isEmailUniqueValid = await this.findByEmail(newUser.email);
+    const isUsernameUniqueValid = await this.findByUsername(newUser.username);
 
     if (validator.isEmpty(newUser.username)) {
       throw new GraphQLError("Username is required", {
@@ -99,10 +100,11 @@ class User {
 
     const data = await userCollection.insertOne({
       ...newUser,
+      createdAt: new Date(),
       password: bcryptjs.hashSync(newUser.password),
     });
 
-    console.log(data);
+    // console.log(data);
     const createUser = this.findById(data.insertedId);
 
     return createUser;
