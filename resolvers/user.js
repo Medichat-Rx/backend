@@ -29,12 +29,25 @@ const resolvers = {
       const users = await User.findAll();
       return users;
     },
+
+    findUserByUsername: async (_, args) => {
+      const findUser = await User.findByUsername(args.username);
+      console.log(findUser);
+      return findUser;
+    },
+
+    findUserById: async (_, args) => {
+      const { _id } = args;
+      const user = await User.findById(_id);
+      return user;
+    },
   },
 
 
   Mutation: {
     register: async (_, args ) => {
       const newUser = args.newUser;
+      // console.log(newUser.username, "<<<<<")
       const result = await User.createUser(newUser);
       return result;
     },
