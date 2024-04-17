@@ -12,14 +12,18 @@ type Message {
     createdAt: String
 }
 
-# input newMessage {
-    
-# }
+input NewMessage {
+    text: String
+}
 
 
 type Query {
     getChatMessage: Conversation
 }
+
+type Mutation {
+    sendMessage(newMessage:NewMessage): Conversation
+}
 `;
 
-module.exports = typeDefs
+module.exports = typeDefs;

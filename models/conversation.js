@@ -15,6 +15,19 @@ class Conversation {
 
     return data;
   }
+
+  static async createConversation(_id) {
+    const conversationCollection = this.collection();
+    const createConversation = await conversationCollection.insertOne({
+      UserId: new ObjectId(_id),
+      message: [],
+    });
+    return createConversation;
+  }
+
+  static async sendMessage() {
+    const conversationCollection = this.collection();
+  }
 }
 
 module.exports = Conversation;
