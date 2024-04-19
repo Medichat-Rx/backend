@@ -1,3 +1,4 @@
+const { ObjectId } = require("mongodb");
 const userComplaint = require("../models/userComplaint");
 
 const resolvers = {
@@ -10,6 +11,21 @@ const resolvers = {
         decodedToken._id
       );
       return userComplaints;
+    },
+  },
+
+  Mutation: {
+    createUserComplaint: async (_, args, contextValue) => {
+      const decodedToken = await contextValue.authentication();
+
+      const data = {
+        UserId: new ObjectId(decodedToken._id),
+        ...args.newUserComplaint,
+      };
+
+      const res = await userComplaint.createUserComplaint(data);
+
+      return res
     },
   },
 };

@@ -11,8 +11,20 @@ type UserComplaint {
     updatedAt: String
 }
 
+input NewUserComplaint {
+    symptoms: String
+    symptom_start_time: String
+    medical_history: String,
+    triggering_factors: String,
+    general_feeling: String,
+}
+
 type Query {
     getUserComplaint: UserComplaint
+}
+
+type Mutation {
+    createUserComplaint(newUserComplaint: NewUserComplaint): UserComplaint
 }
 `;
 

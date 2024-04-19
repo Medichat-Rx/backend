@@ -31,6 +31,28 @@ class userComplaint {
 
     return data;
   }
+
+  static async createUserComplaint(data) {
+    const userComplaintCollection = this.collection();
+
+    // const {
+    //   symptoms,
+    //   symptom_start_time,
+    //   medical_history,
+    //   triggering_factors,
+    //   general_feeling,
+    // } = data;
+
+    const result = await userComplaintCollection.insertOne({
+      ...data,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
+
+    const newUserComplaint = await this.findUserComplaint(data.UserId);
+
+    return newUserComplaint;
+  }
 }
 
 module.exports = userComplaint;
