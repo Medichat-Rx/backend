@@ -53,6 +53,38 @@ class userComplaint {
 
     return newUserComplaint;
   }
+
+  static async updateUserComplaint(data) {
+    const userComplaintCollection = this.collection();
+    const {
+      symptoms,
+      symptom_start_time,
+      medical_history,
+      triggering_factors,
+      general_feeling,
+    } = data;
+
+    const result = await userComplaintCollection.findOneAndUpdate(
+      {
+        UserId: new ObjectId(data.UserId),
+      },
+      {
+        $set: {
+          symptoms,
+          symptom_start_time,
+          medical_history,
+          triggering_factors,
+          general_feeling,
+          updatedAt: new Date(),
+        },
+      },
+      {
+        returnDocument: "after",
+      }
+    );
+
+    return result
+  }
 }
 
 module.exports = userComplaint;

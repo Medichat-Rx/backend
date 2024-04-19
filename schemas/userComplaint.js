@@ -25,6 +25,7 @@ type Query {
 
 type Mutation {
     createUserComplaint(newUserComplaint: NewUserComplaint): UserComplaint
+    updateUserComplaint(updateUserComplaint: NewUserComplaint): UserComplaint
 }
 `;
 

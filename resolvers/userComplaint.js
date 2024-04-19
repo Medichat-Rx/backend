@@ -25,7 +25,21 @@ const resolvers = {
 
       const res = await userComplaint.createUserComplaint(data);
 
-      return res
+      return res;
+    },
+
+    updateUserComplaint: async (_, args, contextValue) => {
+      const decodedToken = await contextValue.authentication();
+
+      //   console.log(decodedToken._id);
+
+      const data = {
+        UserId: new ObjectId(decodedToken._id),
+        ...args.updateUserComplaint,
+      };
+
+      const res = await userComplaint.updateUserComplaint(data);
+      return res;
     },
   },
 };
