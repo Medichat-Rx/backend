@@ -6,6 +6,7 @@ type UserComplaint {
     symptom_start_time: String
     medical_history: String,
     triggering_factors: String,
+    drug_allergies: String,
     general_feeling: String,
     createdAt: String,
     updatedAt: String
@@ -16,6 +17,7 @@ input NewUserComplaint {
     symptom_start_time: String
     medical_history: String,
     triggering_factors: String,
+    drug_allergies: String,
     general_feeling: String,
 }
 
