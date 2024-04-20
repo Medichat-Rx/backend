@@ -1,4 +1,5 @@
 const Conversation = require("../models/conversation");
+const UserComplaint = require("../models/userComplaint");
 
 const resolvers = {
   Query: {
@@ -20,10 +21,25 @@ const resolvers = {
       const UserId = decodedToken._id;
       const { text } = args.newMessage;
 
+      const {
+        symptoms,
+        symptom_start_time,
+        medical_history,
+        triggering_factors,
+        drug_allergies,
+        general_feeling,
+      } = await UserComplaint.findUserComplaint(UserId);
+
       const data = {
         text,
         username: decodedToken.username,
         UserId,
+        symptoms,
+        symptom_start_time,
+        medical_history,
+        triggering_factors,
+        drug_allergies,
+        general_feeling,
       };
 
       const result = await Conversation.sendMessage(data);
