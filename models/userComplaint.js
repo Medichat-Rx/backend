@@ -62,6 +62,7 @@ class userComplaint {
       medical_history,
       triggering_factors,
       general_feeling,
+      drug_allergies
     } = data;
 
     const result = await userComplaintCollection.findOneAndUpdate(
@@ -74,6 +75,7 @@ class userComplaint {
           symptom_start_time,
           medical_history,
           triggering_factors,
+          drug_allergies,
           general_feeling,
           updatedAt: new Date(),
         },
@@ -83,7 +85,7 @@ class userComplaint {
       }
     );
 
-    return result
+    return result;
   }
 }
 
