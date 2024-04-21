@@ -115,7 +115,7 @@ class userComplaint {
       );
     }
 
-    const findUserComplaint = this.findUserComplaint(data.UserId);
+    const findUserComplaint = await this.findUserComplaint(data.UserId);
     if (findUserComplaint) {
       throw new GraphQLError(
         "A complaint associated with this user is already exist, try updating a new one instead",
