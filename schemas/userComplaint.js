@@ -13,12 +13,12 @@ type UserComplaint {
 }
 
 input NewUserComplaint {
-    symptoms: String
-    symptom_start_time: String
-    medical_history: String,
-    triggering_factors: String,
-    drug_allergies: String,
-    general_feeling: String,
+    symptoms: String!
+    symptom_start_time: String!
+    medical_history: String!,
+    triggering_factors: String!,
+    drug_allergies: String!,
+    general_feeling: String!,
 }
 
 type Query {

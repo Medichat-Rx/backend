@@ -1,5 +1,7 @@
 const { ObjectId } = require("mongodb");
 const database = require("../config/db");
+const { GraphQLError } = require("graphql");
+const validator = require("validator");
 
 const dummyData = {
   symptoms:
@@ -35,13 +37,95 @@ class userComplaint {
   static async createUserComplaint(data) {
     const userComplaintCollection = this.collection();
 
-    // const {
-    //   symptoms,
-    //   symptom_start_time,
-    //   medical_history,
-    //   triggering_factors,
-    //   general_feeling,
-    // } = data;
+    if (
+      !data.symptoms &&
+      !data.symptom_start_time &&
+      !data.medical_history &&
+      !data.triggering_factors &&
+      !data.general_feeling &&
+      !data.drug_allergies
+    ) {
+      throw new GraphQLError("Tolong ceritakan mengenai keluhan apa yang kamu alami!", {
+        extensions: {
+          code: "BAD_USER_INPUT",
+        },
+      });
+    }
+
+    if (!data.symptoms) {
+      throw new GraphQLError("Tolong isi gejala apa yang kamu alami!", {
+        extensions: {
+          code: "BAD_USER_INPUT",
+        },
+      });
+    }
+
+    if (!data.symptom_start_time) {
+      throw new GraphQLError(
+        "Tolong isi sejak kapan gejala ini mulai dirasakan!",
+        {
+          extensions: {
+            code: "BAD_USER_INPUT",
+          },
+        }
+      );
+    }
+
+    if (!data.medical_history) {
+      throw new GraphQLError(
+        "Tolong isi mengenai riwayat penyakit anda, jika tidak ada anda bisa mengisi 'Tidak ada'",
+        {
+          extensions: {
+            code: "BAD_USER_INPUT",
+          },
+        }
+      );
+    }
+
+    if (!data.triggering_factors) {
+      throw new GraphQLError(
+        "Tolong isi mengenai faktor pemicu yang mungkin memperburuk penyakit anda, jika tidak tahu anda bisa mengisi 'tidak tahu'",
+        {
+          extensions: {
+            code: "BAD_USER_INPUT",
+          },
+        }
+      );
+    }
+
+    if (!data.drug_allergies) {
+      throw new GraphQLError(
+        "Tolong isi jika anda mempunyai alergi terhadap suatu obat, jika tidak anda dapat mengisi 'Tidak, saya tidak memiliki alergi terhadap obat-obatan.' ",
+        {
+          extensions: {
+            code: "BAD_USER_INPUT",
+          },
+        }
+      );
+    }
+
+    if (!data.general_feeling) {
+      throw new GraphQLError(
+        "Tolong ceritakan mengenai perasaan anda secara umum selain gejala ini",
+        {
+          extensions: {
+            code: "BAD_USER_INPUT",
+          },
+        }
+      );
+    }
+
+    const findUserComplaint = this.findUserComplaint(data.UserId);
+    if (findUserComplaint) {
+      throw new GraphQLError(
+        "A complaint associated with this user is already exist, try updating a new one instead",
+        {
+          extensions: {
+            code: "BAD_USER_INPUT",
+          },
+        }
+      );
+    }
 
     const result = await userComplaintCollection.insertOne({
       ...data,
@@ -56,13 +140,91 @@ class userComplaint {
 
   static async updateUserComplaint(data) {
     const userComplaintCollection = this.collection();
+    if (
+      !data.symptoms &&
+      !data.symptom_start_time &&
+      !data.medical_history &&
+      !data.triggering_factors &&
+      !data.general_feeling &&
+      !data.drug_allergies
+    ) {
+      throw new GraphQLError("Tolong ceritakan mengenai keluhan apa yang kamu alami!", {
+        extensions: {
+          code: "BAD_USER_INPUT",
+        },
+      });
+    }
+
+    if (!data.symptoms) {
+      throw new GraphQLError("Tolong isi gejala apa yang kamu alami!", {
+        extensions: {
+          code: "BAD_USER_INPUT",
+        },
+      });
+    }
+
+    if (!data.symptom_start_time) {
+      throw new GraphQLError(
+        "Tolong isi sejak kapan gejala ini mulai dirasakan!",
+        {
+          extensions: {
+            code: "BAD_USER_INPUT",
+          },
+        }
+      );
+    }
+
+    if (!data.medical_history) {
+      throw new GraphQLError(
+        "Tolong isi mengenai riwayat penyakit anda, jika tidak ada anda bisa mengisi 'Tidak ada'",
+        {
+          extensions: {
+            code: "BAD_USER_INPUT",
+          },
+        }
+      );
+    }
+
+    if (!data.triggering_factors) {
+      throw new GraphQLError(
+        "Tolong isi mengenai faktor pemicu yang mungkin memperburuk penyakit anda, jika tidak tahu anda bisa mengisi 'tidak tahu'",
+        {
+          extensions: {
+            code: "BAD_USER_INPUT",
+          },
+        }
+      );
+    }
+
+    if (!data.drug_allergies) {
+      throw new GraphQLError(
+        "Tolong isi jika anda mempunyai alergi terhadap suatu obat, jika tidak anda dapat mengisi 'Tidak, saya tidak memiliki alergi terhadap obat-obatan.' ",
+        {
+          extensions: {
+            code: "BAD_USER_INPUT",
+          },
+        }
+      );
+    }
+
+    if (!data.general_feeling) {
+      throw new GraphQLError(
+        "Tolong ceritakan mengenai perasaan anda secara umum selain gejala ini",
+        {
+          extensions: {
+            code: "BAD_USER_INPUT",
+          },
+        }
+      );
+    }
+
     const {
       symptoms,
       symptom_start_time,
       medical_history,
       triggering_factors,
       general_feeling,
-      drug_allergies
+      drug_allergies,
     } = data;
 
     const result = await userComplaintCollection.findOneAndUpdate(
