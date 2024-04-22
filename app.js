@@ -1,3 +1,5 @@
+
+const { GraphQLError } = require("graphql");
 const { startStandaloneServer } = require("@apollo/server/standalone");
 const { server } = require("./index.js");
 const jwt = require("jsonwebtoken");
