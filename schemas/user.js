@@ -24,7 +24,7 @@ const typeDefs = `#graphql
 
   type Query {
     findAllUsers: [User]
-    findUserByUsername(username: String!): [User]
+    findUserByUsername(username: String!): User
     findUserById(_id: ID!): User
   }
 
