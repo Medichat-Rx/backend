@@ -14,7 +14,7 @@ type Message {
 }
 
 input NewMessage {
-    text: String
+    text: String!
 }
 
 

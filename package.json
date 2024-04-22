@@ -5,8 +5,8 @@
   "main": "app.js",
   "scripts": {
     "test": "jest --watchAll --verbose --coverage",
-    "start": "node app.js",
-    "dev": "npx nodemon app.js"
+    "start": "node index.js",
+    "dev": "npx nodemon index.js"
   },
   "keywords": [],
   "author": "",

@@ -150,3 +150,44 @@ it("returns user by email", async () => {
   expect(users).toHaveProperty("password");
   expect(users).toHaveProperty("createdAt");
 })
+
+it("login successfully", async () => {
+  const response = await server.executeOperation({
+      query:
+          "mutation Login($email: String!, $password: String!) { login(email: $email, password: $password) { access_token,email } }",
+      variables: { email: "test@mail.com", password: 'password' }
+  });
+
+  //console.log(response.body.singleResult.errors)
+  const login = response.body.singleResult.data?.login;
+  expect(response.body.singleResult.errors).toBeUndefined()
+  expect(login).toEqual(expect.any(Object));
+  expect(login).toHaveProperty("access_token");
+  expect(login).toHaveProperty("email");
+});
+
+it("login failed user didnt input email", async () => {
+  const response = await server.executeOperation({
+      query:
+          "mutation Login($email: String!, $password: String!) { login(email: $email, password: $password) { access_token,email } }",
+      variables: { email: "", password: 'password' }
+  });
+
+  
+  const errors = response.body.singleResult.errors[0];
+  expect(errors).toHaveProperty("message");
+  expect(errors.message).toBe("Invalid email/password");
+});
+
+it("login failed user didnt input password", async () => {
+  const response = await server.executeOperation({
+      query:
+          "mutation Login($email: String!, $password: String!) { login(email: $email, password: $password) { access_token,email } }",
+      variables: { email: "test@mail.com", password: '' }
+  });
+
+  
+  const errors = response.body.singleResult.errors[0];
+  expect(errors).toHaveProperty("message");
+  expect(errors.message).toBe("Invalid email/password");
+});
