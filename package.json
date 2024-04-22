@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest --watchAll --verbose --coverage",
     "start": "node index.js",
-    "dev": "npx nodemon index.js"
+    "dev": "npx nodemon app.js"
   },
   "keywords": [],
   "author": "",
