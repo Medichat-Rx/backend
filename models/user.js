@@ -35,6 +35,27 @@ class User {
     return data;
   }
 
+  static async findCurrentLogUser(_id) {
+    const userCollection = this.collection();
+
+    const data = await userCollection
+      .aggregate([
+        {
+          $match: {
+            _id: new ObjectId(_id),
+          },
+        },
+        {
+          $project: {
+            password: 0,
+          },
+        },
+      ])
+      .toArray();
+
+    return data[0];
+  }
+
   static async createUser(newUser) {
     const userCollection = this.collection();
     const isEmailValid = validator.isEmail(newUser.email);
