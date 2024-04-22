@@ -26,6 +26,7 @@ const typeDefs = `#graphql
     findAllUsers: [User]
     findUserByUsername(username: String!): User
     findUserById(_id: ID!): User
+    findByEmail(email: String!): User
   }
 
   type Mutation{

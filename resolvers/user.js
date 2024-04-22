@@ -40,6 +40,12 @@ const resolvers = {
       const user = await User.findById(_id);
       return user;
     },
+
+    findByEmail: async (_, args) => {
+      const { email } = args;
+      const user = await User.findByEmail(email);
+      return user;
+    }
   },
 
   Mutation: {
