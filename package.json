@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --watchAll --verbose --coverage",
     "start": "node index.js",
     "dev": "npx nodemon index.js"
   },
@@ -13,13 +13,19 @@
   "license": "ISC",
   "dependencies": {
     "@apollo/server": "^4.10.3",
-    "bcryptjs": "^2.4.3",
     "dotenv": "^16.4.5",
     "graphql": "^16.8.1",
     "hercai": "^12.2.0",
     "ioredis": "^5.3.2",
-    "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.5.0",
-    "validator": "^13.11.0"
+    "validator": "^13.11.0",
+    "jest": "^29.7.0"
+  },
+  "devDependencies": {
+    "bcryptjs": "^2.4.3",
+    "jest": "^29.7.0",
+    "jsonwebtoken": "^9.0.2",
+    "@apollo/server": "^4.10.0",
+    "graphql": "^16.8.1"
   }
 }
