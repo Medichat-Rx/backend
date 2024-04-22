@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">24.39% </span>
+                <span class="strong">46.34% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>10/41</span>
+                <span class='fraction'>19/41</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">33.33% </span>
+                <span class="strong">83.33% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>2/6</span>
+                <span class='fraction'>5/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">24.39% </span>
+                <span class="strong">46.34% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>10/41</span>
+                <span class='fraction'>19/41</span>
             </div>
         
             
@@ -184,7 +184,7 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -195,23 +195,23 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -308,24 +308,24 @@ class User {
     return data;
   }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  st</span>atic async findByEmail(email) {
-    const userCollection = <span class="cstat-no" title="statement not covered" >this.collection();</span>
-    const data = <span class="cstat-no" title="statement not covered" >await userCollection.findOne({ email: email });</span>
-<span class="cstat-no" title="statement not covered" >    return data;</span>
+  static async findByEmail(email) {
+    const userCollection = this.collection();
+    const data = await userCollection.findOne({ email: email });
+    return data;
   }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  st</span>atic async findById(_id) {
-    const userCollection = <span class="cstat-no" title="statement not covered" >this.collection();</span>
-    const data = <span class="cstat-no" title="statement not covered" >await userCollection.findOne({ _id: new ObjectId(_id) });</span>
-<span class="cstat-no" title="statement not covered" >    return data;</span>
+  static async findById(_id) {
+    const userCollection = this.collection();
+    const data = await userCollection.findOne({ _id: new ObjectId(_id) });
+    return data;
   }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  st</span>atic async findByUsername(username) {
-    const userCollection = <span class="cstat-no" title="statement not covered" >this.collection();</span>
-    const data = <span class="cstat-no" title="statement not covered" >await userCollection.findOne({</span>
+  static async findByUsername(username) {
+    const userCollection = this.collection();
+    const data = await userCollection.findOne({
       username: username,
     });
-<span class="cstat-no" title="statement not covered" >    return data;</span>
+    return data;
   }
 &nbsp;
 <span class="fstat-no" title="function not covered" >  st</span>atic async createUser(newUser) {
@@ -412,7 +412,7 @@ module.exports = User;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-04-22T04:37:24.689Z
+                at 2024-04-22T06:27:38.110Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
