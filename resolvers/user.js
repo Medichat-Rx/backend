@@ -45,7 +45,15 @@ const resolvers = {
       const { email } = args;
       const user = await User.findByEmail(email);
       return user;
-    }
+    },
+
+    findCurrentLogUser: async (_, args, contextValue) => {
+      const decodedToken = await contextValue.authentication();
+
+      const user = await User.findCurrentLogUser(decodedToken._id);
+
+      return user;
+    },
   },
 
   Mutation: {
@@ -55,7 +63,9 @@ const resolvers = {
       const result = await User.createUser(newUser);
 
       /// create conversation upon register
-      const createConversation = await Conversation.createConversation(result._id)
+      const createConversation = await Conversation.createConversation(
+        result._id
+      );
       // console.log(createConversation, "<<<<");
       return result;
     },
