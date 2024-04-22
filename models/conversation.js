@@ -52,6 +52,8 @@ class Conversation {
     Jawaban: "${data.drug_allergies}"
     "Bagaimana perasaan Anda secara umum selain gejala ini?"
     Jawaban: "${data.general_feeling}"
+
+    Anda juga mungkin perlu mengingat nama dari pengguna, namanya adalah: ${data.name}
     
     Jika pengguna meminta rekomendasi obat maka pertimbangkan gejala yang diberikan oleh pengguna, rekomendasikan obat yang tepat dan berikan informasi tentang dosis, frekuensi, dan efek samping yang mungkin. Kira-kira format respons yang diinginkan contohnya sebagai berikut:
     "Berdasarkan gejala yang Anda sebutkan, yaitu sakit perut, mual, riwayat maag, sedang mengonsumsi obat maag, stres, mungkin makan makanan yang tidak cocok, lelah, dan kurang energi, berikut adalah rekomendasi dan informasi yang tepat:
