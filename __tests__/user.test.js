@@ -82,6 +82,48 @@ it("returns user by username", async () => {
   expect(users).toHaveProperty("createdAt");
 })
 
+it("returns all chats by user id", async () => {
+  const response = await server.executeOperation({
+    query: `query {
+      getChatMessage {
+        _id
+        UserId
+        message {
+          _id
+          UserId
+          username
+          text
+          createdAt
+        }
+      }
+    }`,
+  },
+  {
+    contextValue: {
+      authentication: async () => {
+        return {
+          _id: "6625a31e7ebe817aaebd3b51",
+          username: "TesterUser",
+          email: "test@mail.com"
+        }
+      }
+    }
+  }
+)
+  const chats = response.body.singleResult.data?.getChatMessage
+  expect(response.body.singleResult.errors).toBeUndefined();
+  expect(chats).toEqual(expect.any(Object));
+  expect(chats).toHaveProperty("_id");
+  expect(chats).toHaveProperty("UserId");
+  expect(chats.message).toEqual(expect.any(Array));
+  expect(chats.message[0]).toEqual(expect.any(Object));
+  expect(chats.message[0]).toHaveProperty("_id");
+  expect(chats.message[0]).toHaveProperty("UserId");
+  expect(chats.message[0]).toHaveProperty("username");
+  expect(chats.message[0]).toHaveProperty("text");
+  expect(chats.message[0]).toHaveProperty("createdAt");
+})
+
 it("returns user by email", async () => {
   const response = await server.executeOperation({
     query: `query($email: String!) {
@@ -107,6 +149,83 @@ it("returns user by email", async () => {
   expect(users).toHaveProperty("email");
   expect(users).toHaveProperty("password");
   expect(users).toHaveProperty("createdAt");
+})
+
+it("returns chats by user complaint", async () => {
+  const response = await server.executeOperation({
+    query:  `query {
+      getUserComplaint {
+        _id
+        UserId
+        symptoms
+        symptom_start_time
+        medical_history
+        triggering_factors
+        drug_allergies
+        general_feeling
+        createdAt
+        updatedAt
+      }
+    }`
+  },
+  {
+    contextValue: {
+      authentication: async () => {
+        return {
+          _id: "6625a31e7ebe817aaebd3b51",
+          username: "TesterUser",
+          email: "test@mail.com"
+        }
+      }
+    }
+  })
+  const chats = response.body.singleResult.data?.getUserComplaint
+  expect(response.body.singleResult.errors).toBeUndefined();
+  expect(chats).toEqual(expect.any(Object));
+  expect(chats).toHaveProperty("_id");
+  expect(chats).toHaveProperty("UserId");
+  expect(chats).toHaveProperty("symptoms");
+  expect(chats).toHaveProperty("symptom_start_time");
+  expect(chats).toHaveProperty("medical_history");
+  expect(chats).toHaveProperty("triggering_factors");
+  expect(chats).toHaveProperty("drug_allergies");
+  expect(chats).toHaveProperty("general_feeling");
+  expect(chats).toHaveProperty("createdAt");
+  expect(chats).toHaveProperty("updatedAt");
+})
+
+it("returns user by current login user", async () => {
+  const response = await server.executeOperation({
+    query: `query {
+      findCurrentLogUser {
+        _id
+        name
+        username
+        email
+        password
+        createdAt
+        }
+      }`
+  },{
+    contextValue: {
+      authentication: async () => {
+        return {
+          _id: "6625a31e7ebe817aaebd3b51",
+          username: "TesterUser",
+          email: "test@mail.com"
+        }
+      }
+    }
+  });
+
+  const users = response.body.singleResult.data?.findCurrentLogUser;
+  expect(response.body.singleResult.errors).toBeUndefined();
+  expect(users).toEqual(expect.any(Object));
+  expect(users).toHaveProperty("_id");
+  expect(users).toHaveProperty("name");
+  expect(users).toHaveProperty("username");
+  expect(users).toHaveProperty("email");
+  expect(users).toHaveProperty("password");
 })
 
 //login
