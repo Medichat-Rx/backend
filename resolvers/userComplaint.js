@@ -6,10 +6,12 @@ const resolvers = {
     getUserComplaint: async (_, args, contextValue) => {
       const decodedToken = await contextValue.authentication();
 
-      //   console.log(decodedToken._id);
+      // console.log(decodedToken._id, "<<<");
       const userComplaints = await userComplaint.findUserComplaint(
         decodedToken._id
       );
+
+      console.log(userComplaints)
       return userComplaints;
     },
   },

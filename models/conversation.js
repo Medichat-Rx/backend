@@ -23,7 +23,15 @@ class Conversation {
     const conversationCollection = this.collection();
     const createConversation = await conversationCollection.insertOne({
       UserId: new ObjectId(_id),
-      message: [],
+      message: [
+        {
+          _id: new ObjectId(),
+          UserId: null,
+          username: "MediChat Rx",
+          text: "Selamat Datang di MediChat Rx, ada yang bisa kami bantu?",
+          createdAt: new Date(),
+        },
+      ],
     });
     return createConversation;
   }

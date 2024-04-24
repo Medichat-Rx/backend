@@ -140,6 +140,8 @@ class userComplaint {
 
   static async updateUserComplaint(data) {
     const userComplaintCollection = this.collection();
+
+    console.log(data)
     if (
       !data.symptoms &&
       !data.symptom_start_time &&
