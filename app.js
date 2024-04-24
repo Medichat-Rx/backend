@@ -5,7 +5,7 @@ const { server } = require("./index.js");
 const jwt = require("jsonwebtoken");
 (async () => {
     const { url } = await startStandaloneServer(server, {
-      listen: { port: 4000 },context: async ({ req, res }) => {
+      listen: { port: process.env.PORT || 4000 },context: async ({ req, res }) => {
         return {
           authentication: async () => {
             if (!req.headers.authorization) {

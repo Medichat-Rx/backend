@@ -1,3 +1,5 @@
 node_modules
 .env
 coverage
+MediChatRx.pem
+text.txt
